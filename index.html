@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MedConnect – Find the right doctor based on your symptoms. Symptom-based specialist routing and appointment booking.">
+    <title>MedConnect — Smart Doctor Appointments</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Disclaimer -->
+    <div class="disclaimer-banner">
+        <span class="icon">⚠️</span>
+        <strong>Disclaimer:</strong> This platform does NOT provide medical advice. It helps route you to an appropriate specialist only.
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">+</div>
+                MedConnect
+            </a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">☰</button>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-item active">Home</a>
+                <a href="symptoms.html" class="nav-item">Symptom Checker</a>
+                <a href="doctors.html" class="nav-item">Doctors</a>
+
+                <div class="auth-btn-group">
+                    <a href="auth.html" class="btn btn-ghost">Log In</a>
+                    <a href="auth.html" class="btn btn-primary btn-pill">Sign Up</a>
+                </div>
+
+                <div class="user-menu">
+                    <span class="user-menu-name"></span>
+                    <a href="#" id="nav-dashboard-link" class="btn btn-secondary btn-sm">Dashboard</a>
+                    <button onclick="window.logout()" class="btn btn-ghost btn-sm">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content slide-up">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Trusted by 1,000+ patients
+                </div>
+                <h1>Find the <span class="text-gradient">Right Doctor</span> for Your Symptoms</h1>
+                <p>Not sure which specialist to see? Select your symptoms and our smart routing system will connect you with the appropriate medical professional — quickly and easily.</p>
+                <div class="hero-actions">
+                    <a href="symptoms.html" class="btn btn-primary btn-lg btn-pill">
+                        🩺 Start Symptom Checker
+                    </a>
+                    <a href="doctors.html" class="btn btn-secondary btn-lg btn-pill">
+                        Browse All Doctors
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="text-center mb-4">How It Works</h2>
+            <div class="grid grid-3">
+                <div class="card feature-card card-lift">
+                    <div class="feature-icon blue">📋</div>
+                    <h3>1. Select Symptoms</h3>
+                    <p class="text-muted text-sm">Choose from a comprehensive list of common symptoms. Our system maps them to the right specialty.</p>
+                </div>
+                <div class="card feature-card card-lift">
+                    <div class="feature-icon teal">👨‍⚕️</div>
+                    <h3>2. Find a Specialist</h3>
+                    <p class="text-muted text-sm">Get matched with qualified doctors in the recommended specialty. View profiles and availability.</p>
+                </div>
+                <div class="card feature-card card-lift">
+                    <div class="feature-icon rose">📅</div>
+                    <h3>3. Book Instantly</h3>
+                    <p class="text-muted text-sm">Pick a date and time that works for you. Receive instant confirmation for your appointment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 MedConnect. All rights reserved. For demonstrative purposes only.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+    <script>
+        // Mobile nav toggle
+        document.getElementById('nav-toggle').addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('open');
+        });
+
+        // Dashboard link based on role
+        window.addEventListener('authStateChanged', (e) => {
+            const user = e.detail.user;
+            const link = document.getElementById('nav-dashboard-link');
+            if (user && link) {
+                if (user.role === 'patient') link.href = 'patient-dashboard.html';
+                else if (user.role === 'doctor') link.href = 'doctor-dashboard.html';
+                else if (user.role === 'admin') link.href = 'admin-dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

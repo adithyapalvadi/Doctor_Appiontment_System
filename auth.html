@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up — MedConnect</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <span class="icon">⚠️</span>
+        <strong>Disclaimer:</strong> This platform does NOT provide medical advice. It helps route you to an appropriate specialist only.
+    </div>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">+</div>
+                MedConnect
+            </a>
+            <a href="index.html" class="btn btn-ghost btn-sm">← Back to Home</a>
+        </div>
+    </nav>
+
+    <main style="padding: 2rem 1rem; flex: 1; display: flex; align-items: flex-start; justify-content: center;">
+        <div class="card auth-wrapper p-6 slide-up">
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tab-login" onclick="window.switchTab('login')">Log In</div>
+                <div class="auth-tab" id="tab-signup" onclick="window.switchTab('signup')">Sign Up</div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form">
+                <h2 class="mb-1">Welcome back</h2>
+                <p class="text-muted text-sm mb-3">Enter your credentials to continue.</p>
+                <div class="form-group">
+                    <label class="form-label">Email address</label>
+                    <input type="email" id="login-email" class="form-control" required placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="login-password" class="form-control" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg">Log In</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" style="display: none;">
+                <h2 class="mb-1">Create an account</h2>
+                <p class="text-muted text-sm mb-3">Join MedConnect to book appointments.</p>
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="signup-name" class="form-control" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email address</label>
+                    <input type="email" id="signup-email" class="form-control" required placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="signup-password" class="form-control" required placeholder="Min 6 characters" minlength="6">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">I am a...</label>
+                    <select id="signup-role" class="form-control" required>
+                        <option value="patient">Patient — Looking for a Doctor</option>
+                        <option value="doctor">Doctor — Providing Care</option>
+                    </select>
+                </div>
+                <div id="doctor-fields" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Medical Registration Number</label>
+                        <input type="text" id="signup-reg-number" class="form-control" placeholder="e.g. TNMC 12345" pattern="[A-Z]{2,6}\s?\d{3,10}" title="Format: TNMC 12345">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Clinic Address (Chennai Only)</label>
+                        <input type="text" id="signup-address" class="form-control" placeholder="e.g. 100 Mount Road, Chennai">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number (Indian)</label>
+                        <input type="tel" id="signup-phone" class="form-control" placeholder="e.g. +91 9876543210" pattern="((\+91)?(-)?|0)?[7-9]{1}[0-9]{9}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Specialty</label>
+                        <select id="signup-specialty" class="form-control">
+                            <option value="" disabled selected>Select your specialty</option>
+                            <option>General Physician</option>
+                            <option>Family Medicine Doctor</option>
+                            <option>Internal Medicine Specialist</option>
+                            <option>Cardiologist</option>
+                            <option>Neurologist</option>
+                            <option>Dermatologist</option>
+                            <option>Endocrinologist</option>
+                            <option>Gastroenterologist</option>
+                            <option>Pulmonologist</option>
+                            <option>Nephrologist</option>
+                            <option>Rheumatologist</option>
+                            <option>Psychiatrist</option>
+                            <option>General Surgeon</option>
+                            <option>Orthopedic Surgeon</option>
+                            <option>Neurosurgeon</option>
+                            <option>Cardiothoracic Surgeon</option>
+                            <option>Plastic Surgeon</option>
+                            <option>Urologist</option>
+                            <option>Pediatrician</option>
+                            <option>Neonatologist</option>
+                            <option>Pediatric Surgeon</option>
+                            <option>Gynecologist</option>
+                            <option>Obstetrician</option>
+                            <option>Ophthalmologist</option>
+                            <option>ENT Specialist</option>
+                            <option>Dentist</option>
+                            <option>Oral & Maxillofacial Surgeon</option>
+                            <option>Oncologist</option>
+                            <option>Radiologist</option>
+                            <option>Anesthesiologist</option>
+                            <option>Pathologist</option>
+                            <option>Emergency Medicine Specialist</option>
+                            <option>Critical Care Specialist</option>
+                            <option>Sports Medicine Specialist</option>
+                            <option>Geriatrician</option>
+                            <option>Immunologist</option>
+                            <option>Infectious Disease Specialist</option>
+                            <option>Hematologist</option>
+                            <option>Allergist</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Years of Experience</label>
+                        <input type="number" id="signup-experience" class="form-control" placeholder="e.g. 10">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg">Create Account</button>
+            </form>
+        </div>
+    </main>
+
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script>
+        window.switchTab = (tab) => {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+
+            if (tab === 'login') {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+                tabLogin.classList.add('active');
+                tabSignup.classList.remove('active');
+            } else {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+                tabLogin.classList.remove('active');
+                tabSignup.classList.add('active');
+            }
+        };
+
+        document.getElementById('signup-role').addEventListener('change', function(e) {
+            const drFields = document.getElementById('doctor-fields');
+            if (e.target.value === 'doctor') {
+                drFields.style.display = 'block';
+                document.getElementById('signup-specialty').required = true;
+                document.getElementById('signup-experience').required = true;
+                document.getElementById('signup-reg-number').required = true;
+                document.getElementById('signup-address').required = true;
+                document.getElementById('signup-phone').required = true;
+            } else {
+                drFields.style.display = 'none';
+                document.getElementById('signup-specialty').required = false;
+                document.getElementById('signup-experience').required = false;
+                document.getElementById('signup-reg-number').required = false;
+                document.getElementById('signup-address').required = false;
+                document.getElementById('signup-phone').required = false;
+            }
+        });
+    </script>
+</body>
+</html>

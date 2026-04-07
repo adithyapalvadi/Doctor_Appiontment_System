@@ -1,0 +1,6 @@
+# Secret configs
+js/supabase-config.js
+
+# Dependencies & node wrappers if they exist
+node_modules/
+.env

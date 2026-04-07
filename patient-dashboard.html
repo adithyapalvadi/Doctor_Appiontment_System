@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard — MedConnect</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">+</div>
+                MedConnect
+            </a>
+            <div class="nav-links">
+                <a href="symptoms.html" class="nav-item">Symptom Checker</a>
+                <a href="doctors.html" class="nav-item">Find a Doctor</a>
+                <div class="user-menu" style="display: flex;">
+                    <span class="user-menu-name"></span>
+                    <button onclick="window.logout()" class="btn btn-ghost btn-sm">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Patient Portal</h3>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-link active" onclick="switchTab('upcoming')">
+                    <span class="sidebar-icon">📅</span> Upcoming
+                </div>
+                <div class="sidebar-link" onclick="switchTab('history')">
+                    <span class="sidebar-icon">🕒</span> History
+                </div>
+            </div>
+        </aside>
+        <div class="dash-content" id="dashboard-content">
+            <!-- JS renders content -->
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="rating-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="mb-1">Rate Your Experience</h3>
+            <p class="text-muted text-sm mb-2" id="rating-doctor-label">How was your visit with Dr. Name?</p>
+            <div class="rating-stars-input" id="rating-stars">
+                <button class="star-btn" data-value="1">★</button>
+                <button class="star-btn" data-value="2">★</button>
+                <button class="star-btn" data-value="3">★</button>
+                <button class="star-btn" data-value="4">★</button>
+                <button class="star-btn" data-value="5">★</button>
+            </div>
+            <div class="form-group">
+                <textarea id="rating-review" class="form-control" rows="2" placeholder="Write a short review (optional)..."></textarea>
+            </div>
+            <div class="flex gap-2 justify-center">
+                <button id="submit-rating-btn" class="btn btn-primary btn-lg" disabled>Submit Rating</button>
+                <button onclick="closeRatingModal()" class="btn btn-outline">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/dashboard-patient.js"></script>
+</body>
+</html>

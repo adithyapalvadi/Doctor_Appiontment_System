@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Doctors — MedConnect</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <span class="icon">⚠️</span>
+        <strong>Disclaimer:</strong> This platform does NOT provide medical advice. It helps route you to an appropriate specialist only.
+    </div>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">+</div>
+                MedConnect
+            </a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">☰</button>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="symptoms.html" class="nav-item">Symptom Checker</a>
+                <a href="doctors.html" class="nav-item active">Doctors</a>
+
+                <div class="auth-btn-group">
+                    <a href="auth.html" class="btn btn-ghost btn-sm">Log In</a>
+                </div>
+                <div class="user-menu">
+                    <span class="user-menu-name"></span>
+                    <a href="#" id="nav-dashboard-link" class="btn btn-secondary btn-sm">Dashboard</a>
+                    <button onclick="window.logout()" class="btn btn-ghost btn-sm">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding: 2.5rem 0; flex: 1;">
+        <div class="container">
+            <!-- Recommendation banner (shown when routed from symptom checker) -->
+            <div id="recommended-banner" class="recommended-banner" style="display: none;">
+                <p class="text-muted text-sm font-semibold">Based on your symptoms, we recommend:</p>
+                <div class="specialty-badge" id="recommended-specialty-text">Specialty</div>
+            </div>
+
+            <!-- Filter bar -->
+            <div class="card filter-bar">
+                <h3 style="margin:0;">Available Doctors</h3>
+                <div class="flex gap-2 items-center">
+                    <select id="filter-specialty" class="form-control" style="width: 240px;">
+                        <option value="All">All Specialties</option>
+                    </select>
+                    <button onclick="window.clearFilters()" class="btn btn-outline btn-sm">Clear</button>
+                </div>
+            </div>
+
+            <!-- Doctor Grid -->
+            <div id="doctors-grid" class="grid grid-3">
+                <!-- JS renders cards here -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 MedConnect. For demonstrative purposes only.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/doctors.js"></script>
+    <script>
+        document.getElementById('nav-toggle')?.addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('open');
+        });
+        window.addEventListener('authStateChanged', (e) => {
+            const user = e.detail.user;
+            const link = document.getElementById('nav-dashboard-link');
+            if (user && link) {
+                if (user.role === 'patient') link.href = 'patient-dashboard.html';
+                else if (user.role === 'doctor') link.href = 'doctor-dashboard.html';
+                else if (user.role === 'admin') link.href = 'admin-dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
