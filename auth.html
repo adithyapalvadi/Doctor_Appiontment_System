@@ -151,14 +151,16 @@
 
                 <button type="submit" class="btn btn-primary btn-block btn-lg">Create Account</button>
 
-                <div class="auth-divider">
-                    <span>OR</span>
+                <div id="google-signup-wrapper">
+                    <div class="auth-divider">
+                        <span>OR</span>
+                    </div>
+                    
+                    <button type="button" class="btn btn-outline btn-block btn-lg flex items-center justify-center gap-2" id="btn-google-signup">
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px; height: 20px;">
+                        Continue with Google
+                    </button>
                 </div>
-                
-                <button type="button" class="btn btn-outline btn-block btn-lg flex items-center justify-center gap-2" id="btn-google-signup">
-                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px; height: 20px;">
-                    Continue with Google
-                </button>
             </form>
         </div>
     </main>
@@ -196,10 +198,14 @@
         // Role change handler for doctor fields
         document.getElementById('signup-role').addEventListener('change', function(e) {
             const doctorFields = document.getElementById('doctor-fields');
+            const googleSignup = document.getElementById('google-signup-wrapper');
+            
             if (e.target.value === 'doctor') {
                 doctorFields.style.display = 'block';
+                googleSignup.style.display = 'none';
             } else {
                 doctorFields.style.display = 'none';
+                googleSignup.style.display = 'block';
             }
         });
     </script>
