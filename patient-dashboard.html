@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Dashboard — MedConnect</title>
+    <title>Patient Dashboard - MedConnect</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
@@ -24,7 +28,9 @@
         </div>
     </nav>
 
+    <!-- Dashboard Layout -->
     <div class="dashboard-layout">
+        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h3>Patient Portal</h3>
@@ -38,8 +44,14 @@
                 </div>
             </div>
         </aside>
+
+        <!-- Main Content -->
         <div class="dash-content" id="dashboard-content">
-            <!-- JS renders content -->
+            <!-- Rendered by JavaScript -->
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Loading appointments...</p>
+            </div>
         </div>
     </div>
 
@@ -49,11 +61,11 @@
             <h3 class="mb-1">Rate Your Experience</h3>
             <p class="text-muted text-sm mb-2" id="rating-doctor-label">How was your visit with Dr. Name?</p>
             <div class="rating-stars-input" id="rating-stars">
-                <button class="star-btn" data-value="1">★</button>
-                <button class="star-btn" data-value="2">★</button>
-                <button class="star-btn" data-value="3">★</button>
-                <button class="star-btn" data-value="4">★</button>
-                <button class="star-btn" data-value="5">★</button>
+                <button type="button" class="star-btn" data-value="1">★</button>
+                <button type="button" class="star-btn" data-value="2">★</button>
+                <button type="button" class="star-btn" data-value="3">★</button>
+                <button type="button" class="star-btn" data-value="4">★</button>
+                <button type="button" class="star-btn" data-value="5">★</button>
             </div>
             <div class="form-group">
                 <textarea id="rating-review" class="form-control" rows="2" placeholder="Write a short review (optional)..."></textarea>

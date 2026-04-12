@@ -138,9 +138,9 @@ window.closeRatingModal = () => {
 
 window.switchTab = (tabId) => {
     document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
-    if (event && event.target) {
-        event.target.closest('.sidebar-link').classList.add('active');
-    }
+    // Find the link that was clicked and set it active
+    const activeLink = document.querySelector(`.sidebar-link[onclick*="${tabId}"]`);
+    if (activeLink) activeLink.classList.add('active');
 
     const content = document.getElementById('dashboard-content');
     const title = tabId === 'upcoming' ? 'Upcoming Appointments' : 'Appointment History';
@@ -176,49 +176,52 @@ window.switchTab = (tabId) => {
         let actionButtons = '';
 
         if (tabId === 'upcoming' && app.status !== 'cancelled') {
-            actionButtons = `<button class="btn btn-danger btn-sm" onclick="cancelAppointment('${app.id}')">Cancel</button>`;
+            actionButtons = `<button class="btn btn-outline btn-sm" onclick="cancelAppointment('${app.id}')">Cancel Appointment</button>`;
         }
 
         if (app.status === 'completed') {
             if (rated) {
                 actionButtons = `
-                    <span class="meta-tag" style="background: rgba(245,158,11,0.1); color: var(--accent-amber);">
-                        ${'★'.repeat(rated.rating)}${'☆'.repeat(5 - rated.rating)} Rated
-                    </span>
+                    <div class="flex items-center gap-1" style="color: var(--amber);">
+                        ${'★'.repeat(rated.rating)}${'☆'.repeat(5 - rated.rating)}
+                        <span class="text-xs text-muted">Rated</span>
+                    </div>
                 `;
             } else {
                 actionButtons = `
                     <button class="btn btn-primary btn-sm" onclick="openRatingModal('${app.id}', '${app.doctor_id}', '${docName}')">
-                        ⭐ Rate Doctor
+                        ⭐ Rate Visit
                     </button>
                 `;
             }
         }
 
-        const row = document.createElement('div');
-        row.className = 'appointment-row fade-in';
-        row.innerHTML = `
-            <div class="appt-info">
-                <h4>${docName}</h4>
-                <span class="specialty-text text-sm" style="color: var(--primary-500); font-weight:600;">${docSpec}</span>
-                ${docEmail || docPhone || docAddress ? `
-                <div class="appt-contact text-sm text-muted" style="margin-top: 0.5rem; margin-bottom: 0.5rem; line-height: 1.4;">
-                    ${docAddress ? `<div>📍 <strong>Address:</strong> ${docAddress}</div>` : ''}
-                    ${docEmail ? `<div>✉️ <strong>Email:</strong> ${docEmail}</div>` : ''}
-                    ${docPhone ? `<div>📞 <strong>Phone:</strong> ${docPhone}</div>` : ''}
-                </div>` : ''}
-                <div class="appt-meta">
+        const apptCard = document.createElement('div');
+        apptCard.className = 'card appointment-card fade-in';
+        apptCard.innerHTML = `
+            <div class="appointment-info">
+                <div class="appointment-doctor">${docName}</div>
+                <div class="appointment-specialty">${docSpec}</div>
+                
+                <div class="appointment-datetime">
                     <span>📅 ${AppUtils.formatDate(app.appointment_date)}</span>
-                    <span>🕒 ${AppUtils.formatTime(app.appointment_time)}</span>
+                    <span style="margin-left: 0.5rem;">🕒 ${AppUtils.formatTime(app.appointment_time)}</span>
                 </div>
-                ${app.symptoms_described ? `<div class="appt-symptoms">${app.symptoms_described}</div>` : ''}
+
+                ${docEmail || docPhone || docAddress ? `
+                <div class="text-xs text-muted mt-2" style="line-height: 1.4;">
+                    ${docAddress ? `<div>📍 ${docAddress}</div>` : ''}
+                    ${docEmail ? `<div>✉️ ${docEmail}</div>` : ''}
+                </div>` : ''}
+                
+                ${app.symptoms_described ? `<div class="mt-2 text-sm"><strong>Symptoms:</strong> ${app.symptoms_described}</div>` : ''}
             </div>
-            <div class="appt-actions">
-                <span class="badge badge-${app.status}">${app.status}</span>
+            <div class="appointment-actions">
+                <span class="status-badge status-${app.status}">${app.status}</span>
                 ${actionButtons}
             </div>
         `;
-        content.appendChild(row);
+        content.appendChild(apptCard);
     });
 };
 

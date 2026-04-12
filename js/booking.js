@@ -32,6 +32,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const today = new Date().toISOString().split('T')[0];
     dateInput.setAttribute('min', today);
 
+    // Populate Time Slots (9 AM to 5 PM)
+    const timeSelect = document.getElementById('booking-time');
+    const slots = [
+        "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", 
+        "12:00", "12:30", "14:00", "14:30", "15:00", "15:30", 
+        "16:00", "16:30", "17:00"
+    ];
+    slots.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = AppUtils.formatTime(s);
+        timeSelect.appendChild(opt);
+    });
+
     document.getElementById('booking-form').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -63,7 +77,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             AppUtils.showToast("Booking failed: " + (error.message || "Unknown error"), "error");
         } else {
             sessionStorage.removeItem('medconnect_current_symptoms');
-            document.getElementById('success-modal').style.display = 'flex';
+            const modal = document.getElementById('success-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
         }
     });
 });

@@ -49,24 +49,28 @@ function renderSymptoms(list) {
 
     list.forEach(symptom => {
         const isSelected = selectedSymptoms.has(symptom.symptom_name);
-        const chip = document.createElement('div');
-        chip.className = `symptom-chip ${isSelected ? 'selected' : ''}`;
-        chip.innerHTML = `
-            <span class="check-circle">${isSelected ? '✓' : ''}</span>
-            <span>${symptom.symptom_name}</span>
+        const card = document.createElement('div');
+        card.className = `symptom-card ${isSelected ? 'selected' : ''}`;
+        
+        // Use a generic icon if none provided
+        const icon = "🩺"; 
+        
+        card.innerHTML = `
+            <div class="symptom-icon">${icon}</div>
+            <div class="symptom-name">${symptom.symptom_name}</div>
         `;
 
-        chip.addEventListener('click', () => {
+        card.addEventListener('click', () => {
             if (selectedSymptoms.has(symptom.symptom_name)) {
                 selectedSymptoms.delete(symptom.symptom_name);
             } else {
                 selectedSymptoms.add(symptom.symptom_name);
             }
-            renderSymptoms(list); // Re-render to show updated state
+            renderSymptoms(list); 
             updateSelectedPills();
         });
 
-        grid.appendChild(chip);
+        grid.appendChild(card);
     });
 }
 
@@ -80,8 +84,8 @@ function updateSelectedPills() {
     selectedSymptoms.forEach(s => {
         const pill = document.createElement('span');
         pill.className = 'pill';
-        pill.innerHTML = `${s} <span class="remove" data-symptom="${s}">&times;</span>`;
-        pill.querySelector('.remove').addEventListener('click', (e) => {
+        pill.innerHTML = `${s} <button class="remove-pill" data-symptom="${s}">&times;</button>`;
+        pill.querySelector('.remove-pill').addEventListener('click', (e) => {
             e.stopPropagation();
             selectedSymptoms.delete(s);
             renderSymptoms(allSymptoms);

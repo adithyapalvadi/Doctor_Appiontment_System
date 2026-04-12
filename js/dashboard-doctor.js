@@ -37,9 +37,9 @@ async function fetchAppointments() {
 
 window.switchTab = (tabId) => {
     document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
-    if (event && event.target) {
-        event.target.closest('.sidebar-link').classList.add('active');
-    }
+    // Find the link that was clicked and set it active
+    const activeLink = document.querySelector(`.sidebar-link[onclick*="${tabId}"]`);
+    if (activeLink) activeLink.classList.add('active');
 
     const content = document.getElementById('dashboard-content');
 
@@ -88,24 +88,26 @@ window.switchTab = (tabId) => {
             `;
         }
 
-        const row = document.createElement('div');
-        row.className = 'appointment-row fade-in';
-        row.innerHTML = `
-            <div class="appt-info">
-                <h4>${patName}</h4>
-                ${tabId === 'history' && patEmail ? `<span class="text-xs text-muted">${patEmail}</span>` : ''}
-                <div class="appt-meta">
+        const apptCard = document.createElement('div');
+        apptCard.className = 'card appointment-card fade-in';
+        apptCard.innerHTML = `
+            <div class="appointment-info">
+                <div class="appointment-doctor">${patName}</div>
+                ${tabId === 'history' && patEmail ? `<div class="text-xs text-muted">${patEmail}</div>` : ''}
+                
+                <div class="appointment-datetime">
                     <span>📅 ${AppUtils.formatDate(app.appointment_date)}</span>
-                    <span>🕒 ${AppUtils.formatTime(app.appointment_time)}</span>
+                    <span style="margin-left: 0.5rem;">🕒 ${AppUtils.formatTime(app.appointment_time)}</span>
                 </div>
-                ${app.symptoms_described ? `<div class="appt-symptoms"><strong>Symptoms:</strong> ${app.symptoms_described}</div>` : ''}
+                
+                ${app.symptoms_described ? `<div class="mt-2 text-sm"><strong>Symptoms:</strong> ${app.symptoms_described}</div>` : ''}
             </div>
-            <div class="appt-actions">
-                <span class="badge badge-${app.status}">${app.status}</span>
+            <div class="appointment-actions">
+                <span class="status-badge status-${app.status}">${app.status}</span>
                 ${actionButtons}
             </div>
         `;
-        content.appendChild(row);
+        content.appendChild(apptCard);
     });
 };
 

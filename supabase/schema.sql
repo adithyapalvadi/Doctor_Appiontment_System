@@ -73,9 +73,13 @@ CREATE POLICY "Users can update own profile" ON public.users FOR UPDATE USING (a
 CREATE POLICY "Anyone can read doctors" ON public.doctors FOR SELECT USING (true);
 CREATE POLICY "Doctors can insert own profile" ON public.doctors FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Doctors can update their profile" ON public.doctors FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Admins can manage doctors" ON public.doctors FOR ALL 
+    USING (EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND role = 'admin'));
 
 -- Symptoms: Anyone can read the symptom mapping
 CREATE POLICY "Anyone can read symptoms" ON public.symptoms FOR SELECT USING (true);
+CREATE POLICY "Admins can manage symptoms" ON public.symptoms FOR ALL 
+    USING (EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND role = 'admin'));
 
 -- Appointments:
 -- Patients can see their own
@@ -89,6 +93,8 @@ CREATE POLICY "Doctors read assigned appointments" ON public.appointments FOR SE
     USING (doctor_id IN (SELECT id FROM public.doctors WHERE user_id = auth.uid()));
 CREATE POLICY "Doctors update assigned appointments" ON public.appointments FOR UPDATE
     USING (doctor_id IN (SELECT id FROM public.doctors WHERE user_id = auth.uid()));
+CREATE POLICY "Admins can manage appointments" ON public.appointments FOR ALL 
+    USING (EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND role = 'admin'));
 
 -- Ratings Table
 CREATE TABLE public.ratings (

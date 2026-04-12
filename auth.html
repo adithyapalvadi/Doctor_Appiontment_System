@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Sign Up — MedConnect</title>
+    <title>Login / Sign Up - MedConnect</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Disclaimer Banner -->
     <div class="disclaimer-banner">
         <span class="icon">⚠️</span>
         <strong>Disclaimer:</strong> This platform does NOT provide medical advice. It helps route you to an appropriate specialist only.
     </div>
 
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
@@ -22,6 +27,7 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
     <main style="padding: 2rem 1rem; flex: 1; display: flex; align-items: flex-start; justify-content: center;">
         <div class="card auth-wrapper p-6 slide-up">
             <!-- Tabs -->
@@ -40,9 +46,18 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Password</label>
-                    <input type="password" id="login-password" class="form-control" required placeholder="••••••••">
+                    <input type="password" id="login-password" class="form-control" required placeholder="Enter your password">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block btn-lg">Log In</button>
+                
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                
+                <button type="button" class="btn btn-outline btn-block btn-lg flex items-center justify-center gap-2" id="btn-google-login">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px; height: 20px;">
+                    Continue with Google
+                </button>
             </form>
 
             <!-- Signup Form -->
@@ -64,22 +79,25 @@
                 <div class="form-group">
                     <label class="form-label">I am a...</label>
                     <select id="signup-role" class="form-control" required>
-                        <option value="patient">Patient — Looking for a Doctor</option>
-                        <option value="doctor">Doctor — Providing Care</option>
+                        <option value="patient">Patient - Looking for a Doctor</option>
+                        <option value="doctor">Doctor - Providing Care</option>
+                        <option value="admin">Admin - Platform Management</option>
                     </select>
                 </div>
+
+                <!-- Doctor-specific fields -->
                 <div id="doctor-fields" style="display: none;">
                     <div class="form-group">
                         <label class="form-label">Medical Registration Number</label>
-                        <input type="text" id="signup-reg-number" class="form-control" placeholder="e.g. TNMC 12345" pattern="[A-Z]{2,6}\s?\d{3,10}" title="Format: TNMC 12345">
+                        <input type="text" id="signup-reg-number" class="form-control" placeholder="e.g. TNMC 12345">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Clinic Address (Chennai Only)</label>
+                        <label class="form-label">Clinic Address</label>
                         <input type="text" id="signup-address" class="form-control" placeholder="e.g. 100 Mount Road, Chennai">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Phone Number (Indian)</label>
-                        <input type="tel" id="signup-phone" class="form-control" placeholder="e.g. +91 9876543210" pattern="((\+91)?(-)?|0)?[7-9]{1}[0-9]{9}">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" id="signup-phone" class="form-control" placeholder="e.g. +91 9876543210">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Specialty</label>
@@ -128,17 +146,35 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Years of Experience</label>
-                        <input type="number" id="signup-experience" class="form-control" placeholder="e.g. 10">
+                        <input type="number" id="signup-experience" class="form-control" placeholder="e.g. 10" min="0">
                     </div>
                 </div>
+
                 <button type="submit" class="btn btn-primary btn-block btn-lg">Create Account</button>
+
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                
+                <button type="button" class="btn btn-outline btn-block btn-lg flex items-center justify-center gap-2" id="btn-google-signup">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px; height: 20px;">
+                    Continue with Google
+                </button>
             </form>
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 MedConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script type="module" src="js/app.js"></script>
     <script type="module" src="js/auth.js"></script>
     <script>
+        // Tab switching
         window.switchTab = (tab) => {
             const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
@@ -158,22 +194,13 @@
             }
         };
 
+        // Role change handler for doctor fields
         document.getElementById('signup-role').addEventListener('change', function(e) {
-            const drFields = document.getElementById('doctor-fields');
+            const doctorFields = document.getElementById('doctor-fields');
             if (e.target.value === 'doctor') {
-                drFields.style.display = 'block';
-                document.getElementById('signup-specialty').required = true;
-                document.getElementById('signup-experience').required = true;
-                document.getElementById('signup-reg-number').required = true;
-                document.getElementById('signup-address').required = true;
-                document.getElementById('signup-phone').required = true;
+                doctorFields.style.display = 'block';
             } else {
-                drFields.style.display = 'none';
-                document.getElementById('signup-specialty').required = false;
-                document.getElementById('signup-experience').required = false;
-                document.getElementById('signup-reg-number').required = false;
-                document.getElementById('signup-address').required = false;
-                document.getElementById('signup-phone').required = false;
+                doctorFields.style.display = 'none';
             }
         });
     </script>

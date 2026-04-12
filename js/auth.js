@@ -121,4 +121,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1000);
         });
     }
+
+    // Handle Google Auth
+    const handleGoogleLogin = async () => {
+        AppUtils.showLoading("Redirecting to Google...");
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: window.location.origin + '/index.html'
+            }
+        });
+        if (error) {
+            AppUtils.hideLoading();
+            AppUtils.showToast("Google login failed: " + error.message, "error");
+        }
+    };
+
+    const btnGoogleLogin = document.getElementById('btn-google-login');
+    const btnGoogleSignup = document.getElementById('btn-google-signup');
+
+    if (btnGoogleLogin) btnGoogleLogin.addEventListener('click', handleGoogleLogin);
+    if (btnGoogleSignup) btnGoogleSignup.addEventListener('click', handleGoogleLogin);
 });

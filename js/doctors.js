@@ -88,7 +88,7 @@ function renderStars(avg) {
     for (let i = 1; i <= 5; i++) {
         if (i <= full) html += '<span>★</span>';
         else if (i === full + 1 && half) html += '<span>★</span>';
-        else html += '<span class="star-empty">★</span>';
+        else html += '<span class="star-empty" style="color: #cbd5e1;">☆</span>';
     }
     return html;
 }
@@ -121,27 +121,29 @@ function renderDoctors(doctors) {
         }
 
         const card = document.createElement('div');
-        card.className = 'card doctor-card card-lift';
+        card.className = 'card doctor-card card-lift animation-card';
+        card.style.height = '100%';
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+        
         card.innerHTML = `
-            <div class="doctor-header">
-                <div class="doctor-avatar">${initials}</div>
-                <div class="doctor-info">
-                    <h3>${doc.name}</h3>
-                    <span class="specialty-text">${doc.specialty}</span>
-                    ${ratingHtml}
-                </div>
-            </div>
-            <div style="flex: 1;">
-                <p class="text-sm text-muted mb-1"><strong>${doc.experience_years}</strong> years experience</p>
-                ${doc.address ? `<p class="text-sm text-muted mb-1" style="font-size: 0.85rem">📍 ${doc.address}</p>` : ''}
-                ${contactEmail ? `<p class="text-sm text-muted mb-1" style="font-size: 0.85rem">✉️ ${contactEmail}</p>` : ''}
+            <div class="doctor-avatar">${initials}</div>
+            <div class="doctor-info" style="flex-grow: 1; display: flex; flex-direction: column;">
+                <h3>${doc.name}</h3>
+                <div class="doctor-specialty">${doc.specialty}</div>
+                ${ratingHtml}
                 <div class="doctor-meta">
+                    <p><strong>${doc.experience_years}</strong> years experience</p>
+                    ${doc.address ? `<p style="font-size: 0.85rem">📍 ${doc.address}</p>` : ''}
+                    ${contactEmail ? `<p style="font-size: 0.85rem">✉️ ${contactEmail}</p>` : ''}
+                </div>
+                <div class="flex flex-wrap gap-1 mt-2 mb-2">
                     ${doc.available_days && doc.available_days.length > 0
-                        ? doc.available_days.map(day => `<span class="meta-tag">${day}</span>`).join('')
-                        : '<span class="meta-tag">Contact for availability</span>'}
+                        ? doc.available_days.map(day => `<span class="slot">${day}</span>`).join('')
+                        : '<span class="slot">Contact for availability</span>'}
                 </div>
             </div>
-            <button class="btn btn-primary btn-block book-btn" data-id="${doc.id}">Book Appointment</button>
+            <button class="btn btn-primary btn-block book-btn" style="margin-top: auto;" data-id="${doc.id}">Book Appointment</button>
         `;
 
         card.querySelector('.book-btn').addEventListener('click', () => {
