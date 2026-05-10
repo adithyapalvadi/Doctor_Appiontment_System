@@ -1,62 +1,112 @@
-# Symptom-Based Doctor Appointment System
+# 🏥 MedConnect: Symptom-Based Doctor Appointment System
 
-A full-stack, Vanilla JavaScript web application that helps route patients to appropriate doctor specialties based on selected symptoms, and allows for booking appointments. It uses Supabase for authentication and database management.
+[![Supabase](https://img.shields.io/badge/Supabase-3EC48C?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
-## Project Structure
+MedConnect is a premium, full-stack Vanilla JavaScript web application designed to streamline the healthcare experience. It features an intelligent symptom-based routing system that connects patients with the right medical specialists, coupled with a robust appointment management system.
+
+---
+
+## ✨ Key Features
+
+### 🔐 Multi-Role Access Control
+- **Patients**: Explore symptoms, find doctors, book appointments, and manage their health journey.
+- **Doctors**: Manage their professional profile, track upcoming appointments, and update patient status.
+- **Admins**: Comprehensive oversight of the entire ecosystem including user management and system configuration.
+
+### 🧠 Intelligent Symptom Routing
+- Advanced mapping of symptoms to medical specialties.
+- Helps patients find the right care without prior medical knowledge.
+
+### 📅 Seamless Appointment Management
+- Real-time booking flow with date and time slot selection.
+- Automated status updates (Pending, Confirmed, Completed, Cancelled).
+- Appointment history for both patients and doctors.
+
+### 🌟 Premium UI/UX
+- **Glassmorphism Design**: A modern, sleek aesthetic with subtle transparencies.
+- **Fully Responsive**: Optimized for desktops, tablets, and mobile devices.
+- **Micro-animations**: Smooth transitions and interactive elements for a premium feel.
+
+### ⭐ Patient Feedback System
+- Integrated rating and review system for appointments.
+- Helps maintain high service standards through community feedback.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Vanilla JavaScript (ES6+), HTML5, CSS3 (Custom Variables, Grid, Flexbox).
+- **Backend-as-a-Service**: [Supabase](https://supabase.com/)
+  - **Authentication**: Secure Email/Password auth.
+  - **Database**: PostgreSQL with Row Level Security (RLS).
+  - **Storage**: (Optional) For profile images.
+- **Icons**: Lucide Icons / Custom SVG.
+
+---
+
+## 📂 Project Structure
 
 ```text
 appointment-system/
 ├── css/
-│   └── style.css            # Premium custom styles (CSS Grid, Variables, Glassmorphism)
+│   └── style.css            # Premium custom styles (Glassmorphism, Animations)
 ├── js/
 │   ├── supabase-config.js   # Supabase client initialization
-│   ├── app.js               # Common utilities, Auth state listener
-│   ├── auth.js              # Login/Signup logic
-│   ├── symptoms.js          # Symptom checklist logic
-│   ├── doctors.js           # Directory and filtering logic
-│   ├── booking.js           # Appointment booking logic
-│   ├── dashboard-patient.js # Patient dashboard logic
-│   ├── dashboard-doctor.js  # Doctor dashboard logic
-│   └── dashboard-admin.js   # Admin dashboard logic
+│   ├── app.js               # Common utilities & Auth state management
+│   ├── auth.js              # Authentication logic
+│   ├── symptoms.js          # Symptom-specialty mapping logic
+│   ├── doctors.js           # Directory & filtering logic
+│   ├── booking.js           # Real-time booking system
+│   ├── dashboard-patient.js # Patient-centric features
+│   ├── dashboard-doctor.js  # Doctor-centric management
+│   └── dashboard-admin.js   # Administrative controls
 ├── supabase/
 │   ├── schema.sql           # Database schema & RLS policies
-│   └── seed.sql             # Dummy data (symptoms to specialties mapping, doctors)
-├── index.html               # Landing page with disclaimer
-├── auth.html                # Login / Registration
-├── symptoms.html            # Core symptom selection feature
-├── doctors.html             # List and filter available doctors
-├── booking.html             # Make an appointment
-├── patient-dashboard.html   # Patient view
-├── doctor-dashboard.html    # Doctor view
-└── admin-dashboard.html     # Admin view
+│   └── seed.sql             # Mapping rules & dummy data
+├── index.html               # Landing page & Disclaimer
+├── auth.html                # Unified Login/Signup
+├── symptoms.html            # Symptom selection interface
+├── doctors.html             # Smart doctor directory
+├── booking.html             # Slot-based booking system
+├── patient-dashboard.html   # Patient dashboard view
+├── doctor-dashboard.html    # Doctor dashboard view
+└── admin-dashboard.html     # Admin dashboard view
 ```
 
-## Setup Instructions
+---
 
-### 1. Supabase Initialization
-1. Create a free account and project on [Supabase.com](https://supabase.com/).
-2. In your Supabase Dashboard, navigate to the **SQL Editor**.
-3. Create a new query, paste the contents of `supabase/schema.sql`, and run it. This creates the necessary tables, enables Row Level Security (RLS), and sets up the policies.
-4. Create another new query in the **SQL Editor**, paste the contents of `supabase/seed.sql`, and run it. This seeds your database with default symptoms and dummy doctors for testing.
-5. In your Supabase project settings, go to **Authentication** -> **Providers** and ensure Email provider is enabled.
-6. (Optional) Check the Triggers section in your SQL editor if you'd like to customize the function that syncs Supabase Auth user creation with the `public.users` table.
+## 🚀 Getting Started
 
-### 2. Frontend Configuration
-1. Back in your Supabase Dashboard, go to **Project Settings** -> **API**.
-2. Copy the **Project URL** and the **anon public API key**.
-3. In your code editor, duplicate `js/supabase-config.example.js` and rename the copy to `js/supabase-config.js`.
-4. Paste the URL into `const SUPABASE_URL = 'YOUR_SUPABASE_URL';`
-5. Paste the anon key into `const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';`
+### 1. Supabase Setup
+1. Create a project at [Supabase.com](https://supabase.com/).
+2. Run `supabase/schema.sql` in the **SQL Editor** to set up tables and RLS policies.
+3. Run `supabase/seed.sql` to populate initial symptoms and doctor data.
+4. Enable **Email Provider** in Authentication settings.
 
-### 3. Running Locally
-Simply serve the files using a local web server (e.g., Live Server extension in VSCode, or Python's `http.server`).
+### 2. Configuration
+1. Obtain your **Project URL** and **Anon Key** from Project Settings -> API.
+2. Rename `js/supabase-config.example.js` to `js/supabase-config.js`.
+3. Fill in your credentials:
+   ```javascript
+   const SUPABASE_URL = 'https://your-project-id.supabase.co';
+   const SUPABASE_ANON_KEY = 'your-public-anon-key';
+   ```
+
+### 3. Launch
+Serve the project using any local web server:
 ```bash
+# Using Python
 python -m http.server 3000
+
+# Using Node.js (if installed)
+npx serve .
 ```
-Then navigate to `http://localhost:3000`.
 
-## Architecture Note
-This app uses a CDN import for `@supabase/supabase-js` so no build step (Webpack/Vite) is strictly required. Modern browser support for ES Modules makes this seamless for vanilla JS applications.
+---
 
-## Disclaimer
-> This project is for demonstrative purposes and does not replace professional medical diagnosis or consultation. Patients are routed based on static logical mapping rules.
+## ⚖️ Disclaimer
+
+> **Important**: This application is for demonstrative and educational purposes only. The symptom routing is based on static mapping and does not constitute professional medical advice, diagnosis, or treatment. Always seek the advice of a qualified health provider with any questions regarding a medical condition.
